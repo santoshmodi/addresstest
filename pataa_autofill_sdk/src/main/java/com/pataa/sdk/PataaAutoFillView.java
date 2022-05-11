@@ -63,6 +63,7 @@ public class PataaAutoFillView extends FrameLayout {
     private EditText editText;
     private View btnAutoFill;
 private Context context;
+private String apikey = "";
     public PataaAutoFillView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.context =context;
@@ -85,6 +86,10 @@ private Context context;
     public PataaAutoFillView setAddressCallBack(OnAddress onAddress) {
         this.address = onAddress;
         return this;
+    }
+    public PataaAutoFillView setCurrentActivity(Activity activity, String apikey) {
+        this.activity = activity;
+        this.apikey = apikey;
     }
 
     public PataaAutoFillView setCurrentActivity(Activity activity) {
@@ -307,7 +312,7 @@ private Context context;
         if (getCurrentActivity() == null) return;
 
         Api.getApi(getContext()).getPataaDetail(
-                getMeta(getContext(), metaClientKey()),
+                apikey.length()==0?getMeta(getContext(), metaClientKey()):apikey,
                 editText.getText().toString().trim().toUpperCase(),
                 getSha1()
         ).enqueue(new Callback<GetPataaDetailResponse>() {
