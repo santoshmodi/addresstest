@@ -90,7 +90,10 @@ private String apikey = "";
     public PataaAutoFillView setCurrentActivity(Activity activity, String apikey) {
         this.activity = activity;
         this.apikey = apikey;
+        return this;
     }
+
+
 
     public PataaAutoFillView setCurrentActivity(Activity activity) {
         this.activity = activity;
@@ -324,6 +327,7 @@ private String apikey = "";
                     Logger.e("api data");
                     Logger.e(response.body().getMsg());
                     Logger.e(new Gson().toJson(response.body()));
+                    Log.e("request",  new Gson().toJson(call.request().body()));
                     Log.e("response",  new Gson().toJson(response.body()));
                     if (response.body().getStatus() == 200) {
                         setPataaDetail(response.body());
