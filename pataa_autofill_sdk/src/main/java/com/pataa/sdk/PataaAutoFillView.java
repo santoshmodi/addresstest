@@ -318,7 +318,7 @@ private String apikey = "";
         Api.getApi(getContext()).getPataaDetail(
                 apikey.length()==0?getMeta(getContext(), metaClientKey()):apikey,
                 editText.getText().toString().trim().toUpperCase(),
-                getSha1()
+                getSha1().toUpperCase()
         ).enqueue(new Callback<GetPataaDetailResponse>() {
 
             @Override
