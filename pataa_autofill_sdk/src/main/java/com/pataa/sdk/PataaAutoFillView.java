@@ -95,6 +95,7 @@ private String apikey = "";
 
 
 
+
     public PataaAutoFillView setCurrentActivity(Activity activity) {
         this.activity = activity;
 
