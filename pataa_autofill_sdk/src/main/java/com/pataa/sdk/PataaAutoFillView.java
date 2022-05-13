@@ -295,7 +295,7 @@ public class PataaAutoFillView extends FrameLayout {
         Api.getApi(getContext()).getPataaDetail(
                 apikey.length() == 0 ? getMeta(getContext(), metaClientKey()) : apikey,
                 editText.getText().toString().trim().toUpperCase(),
-                getSha1().toUpperCase()
+                Utill.getMetaBoolean(context, metaEnableDevelopmentKey()) ? "":getSha1().toUpperCase()
         ).enqueue(new Callback<GetPataaDetailResponse>() {
 
             @Override
