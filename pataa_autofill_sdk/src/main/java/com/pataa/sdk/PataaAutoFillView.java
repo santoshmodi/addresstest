@@ -46,7 +46,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PataaAutoFillView extends FrameLayout {
-//    private ActivityResultLauncher<Intent> launchSomeActivity;
     public static boolean enableLogger;
     public static String sha1;
     private OnAddress address;
@@ -62,24 +61,25 @@ public class PataaAutoFillView extends FrameLayout {
     private AlertDialog whatIsPataaDialog;
     private EditText editText;
     private View btnAutoFill;
-private Context context;
-private String apikey = "";
+    private Context context;
+    private String apikey = "";
+
     public PataaAutoFillView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        this.context =context;
+        this.context = context;
         initView();
     }
 
     public PataaAutoFillView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context =context;
+        this.context = context;
         initView();
     }
 
     public PataaAutoFillView(Context context, OnAddress onAddress) {
         super(context);
         this.address = onAddress;
-        this.context =context;
+        this.context = context;
         initView();
     }
 
@@ -87,31 +87,15 @@ private String apikey = "";
         this.address = onAddress;
         return this;
     }
+
     public PataaAutoFillView setCurrentActivity(Activity activity, String apikey) {
         this.activity = activity;
         this.apikey = apikey;
         return this;
     }
 
-
-
-
     public PataaAutoFillView setCurrentActivity(Activity activity) {
         this.activity = activity;
-
-//        launchSomeActivity = activity.registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-//                new ActivityResultCallback<ActivityResult>() {
-//                    @Override
-//                    public void onActivityResult(ActivityResult result) {
-//                        if (result.getResultCode() == Activity.RESULT_OK) {
-//                            Intent data = result.getData();
-//                            String pc = data.getStringExtra(ON_ACT_RSLT_PATAA_DATA);
-//                            if (pc != null) {
-//                                getPataadetail(pc);
-//                            }
-//                        }
-//                    }
-//                });
         return this;
     }
 
@@ -263,15 +247,8 @@ private String apikey = "";
                     getPataadetail(pataa);
                 }
             });
-           activity.startActivityForResult( intent, 200);
+            activity.startActivityForResult(intent, 200);
 
-//            CreatePataaActivityDialog dailog = new CreatePataaActivityDialog(vContainer.getContext(), ((Activity)context), url, new DialogCallback() {
-//                @Override
-//                public void Response(String pataa) {
-//
-//                }
-//            });
-//            dailog.show();
         }
     }
 
@@ -316,9 +293,9 @@ private String apikey = "";
         if (getCurrentActivity() == null) return;
 
         Api.getApi(getContext()).getPataaDetail(
-                apikey.length()==0?getMeta(getContext(), metaClientKey()):apikey,
+                apikey.length() == 0 ? getMeta(getContext(), metaClientKey()) : apikey,
                 editText.getText().toString().trim().toUpperCase(),
-                getSha1()
+                getSha1().toUpperCase()
         ).enqueue(new Callback<GetPataaDetailResponse>() {
 
             @Override
@@ -328,8 +305,6 @@ private String apikey = "";
                     Logger.e("api data");
                     Logger.e(response.body().getMsg());
                     Logger.e(new Gson().toJson(response.body()));
-                    Log.e("request",  new Gson().toJson(call.request().body()));
-                    Log.e("response",  new Gson().toJson(response.body()));
                     if (response.body().getStatus() == 200) {
                         setPataaDetail(response.body());
                     } else if (response.body().getStatus() == 204) {
