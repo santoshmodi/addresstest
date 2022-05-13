@@ -303,7 +303,7 @@ public class PataaAutoFillView extends FrameLayout {
                 try {
                     Logger.e("request : " + new Gson().toJson(call.request().body()));
                     Logger.e("api data");
-                    Logger.e(response.body().getMsg());
+//                    Logger.e(response.body().getMsg());
                     Logger.e(new Gson().toJson(response.body()));
                     if (response.body().getStatus() == 200) {
                         setPataaDetail(response.body());

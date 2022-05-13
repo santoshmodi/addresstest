@@ -108,11 +108,12 @@ public class CreatePataaActivity extends Activity {
         {
             if (grantResults.length == 0 ||
                     grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                openCreatePataaFlow();
                 Log.i("TAG", "User denied ACCESS_COARSE_LOCATION permission.");
+                Toast.makeText(this,"User denied permission.", Toast.LENGTH_SHORT).show();
             } else {
               //  Toast.makeText(this, R.string.permission_granted, Toast.LENGTH_SHORT).show();
                 Log.i("TAG", "User granted ACCESS_COARSE_LOCATION permission.");
+                openCreatePataaFlow();
             }
 
             ;
