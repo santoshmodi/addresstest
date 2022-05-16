@@ -371,15 +371,15 @@ public class PataaAutoFillView extends FrameLayout {
 
     public void getPataadetail(EditText editText) {
         if (getCurrentActivity() == null) return;
-        Resources appR = activity.getResources();
+        Resources appR = context.getResources();
         CharSequence txt = appR.getText(appR.getIdentifier("app_name",
-                "string", activity.getPackageName()));
+                "string", context.getPackageName()));
 
         Api.getApi(getContext()).getPataaDetail(
                 apikey.length() == 0 ? getMeta(getContext(), metaClientKey()) : apikey,
                 editText.getText().toString().trim().toUpperCase(), "android",
                 txt.toString(),
-                activity.getPackageName(),
+                context.getPackageName(),
                getSha1().toUpperCase()
         ).enqueue(new Callback<GetPataaDetailResponse>() {
 
