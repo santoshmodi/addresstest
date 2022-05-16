@@ -14,6 +14,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.text.Editable;
@@ -22,12 +24,18 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -144,6 +152,10 @@ public class PataaAutoFillView extends FrameLayout {
         }
     };
 
+    String strings[] = {"^KUMAR100", "^786ALIF", "^SINGH007", "^123JOHN"};
+    int messageCount = strings.length;
+    int currentIndex = -1;
+
     private void initView() {
         enableLogger = Utill.getMetaBoolean(getContext(), metaEnableDebugKey());
         View inflatedView = inflate(getContext(), R.layout.pataa_auto_fill_cell, this);
@@ -151,6 +163,7 @@ public class PataaAutoFillView extends FrameLayout {
         View edtCaret = inflatedView.findViewById(R.id.edtCaret);
         View tvClickHere = inflatedView.findViewById(R.id.tvClickHere);
         View edtHint = inflatedView.findViewById(R.id.edtHint);
+        View edtHint2 = inflatedView.findViewById(R.id.edtHint2);
         View tvCreateNow = inflatedView.findViewById(R.id.tvCreateNow);
         btnAddAddress = inflatedView.findViewById(R.id.btnAddAddress);
         btnCrossPataaNotFound = inflatedView.findViewById(R.id.btnCrossPataaNotFound);
@@ -186,6 +199,21 @@ public class PataaAutoFillView extends FrameLayout {
         });
 
         addFiltersToEditText(editText);
+        editText.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+
+                if(b)
+                {
+                    if (edtHint != null) {
+                        edtHint.setVisibility(GONE);
+                    }
+                    if (edtHint2 != null) {
+                        edtHint2.setVisibility(VISIBLE);
+                    }
+                }
+            }
+        });
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -195,8 +223,8 @@ public class PataaAutoFillView extends FrameLayout {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
-                    if (edtHint != null) {
-                        edtHint.setVisibility(charSequence.length() > 0 ? GONE : VISIBLE);
+                    if (edtHint2 != null) {
+                        edtHint2.setVisibility(charSequence.length() > 0 ? GONE : VISIBLE);
                     }
 
                     handler.removeCallbacks(runnable);
@@ -227,6 +255,44 @@ public class PataaAutoFillView extends FrameLayout {
                 return false;
             }
         });
+
+        //########## animation ##############//
+        TextSwitcher simpleTextSwitcher = inflatedView. findViewById(R.id.simpleTextSwitcher);
+        // Set the ViewFactory of the TextSwitcher that will create TextView object when asked
+        simpleTextSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+
+            public View makeView() {
+                // TODO Auto-generated method stub
+                // create a TextView
+                TextView t = new TextView(context);
+                // set the gravity of text to top and center horizontal
+//                t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+                // set displayed text size
+                t.setTextSize(15);
+                return t;
+            }
+        });
+
+        // Declare in and out animations and load them using AnimationUtils class
+        Animation in = AnimationUtils.loadAnimation(context, R.anim.bottom_up);
+        Animation out = AnimationUtils.loadAnimation(context, R.anim.bottom_up2);
+
+        // set the animation type to TextSwitcher
+        simpleTextSwitcher.setInAnimation(in);
+        simpleTextSwitcher.setOutAnimation(out);
+        final Handler handler = new Handler();
+        final int delay = 1500; // 1000 milliseconds == 1 second
+//        simpleTextSwitcher.setCurrentText("Enter Pataa");
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                handler.postDelayed(this, delay);
+                currentIndex++;
+                // If index reaches maximum then reset it
+                if (currentIndex == messageCount)
+                    currentIndex = 0;
+                simpleTextSwitcher.setText(strings[currentIndex]);
+            }
+        }, delay);
 
     }
 
@@ -291,11 +357,16 @@ public class PataaAutoFillView extends FrameLayout {
 
     public void getPataadetail(EditText editText) {
         if (getCurrentActivity() == null) return;
+        Resources appR = activity.getResources();
+        CharSequence txt = appR.getText(appR.getIdentifier("app_name",
+                "string", activity.getPackageName()));
 
         Api.getApi(getContext()).getPataaDetail(
                 apikey.length() == 0 ? getMeta(getContext(), metaClientKey()) : apikey,
-                editText.getText().toString().trim().toUpperCase(),
-                Utill.getMetaBoolean(context, metaEnableDevelopmentKey()) ? "":getSha1().toUpperCase()
+                editText.getText().toString().trim().toUpperCase(), "android",
+                txt.toString(),
+                activity.getPackageName(),
+               getSha1().toUpperCase()
         ).enqueue(new Callback<GetPataaDetailResponse>() {
 
             @Override

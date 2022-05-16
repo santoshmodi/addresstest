@@ -64,8 +64,29 @@
                             android:paddingLeft="@dimen/_5sdp_pataa"
                             android:text="^"
                             android:textColor="@color/color_1C1C1C"
-                            android:visibility="gone"
-                            android:textSize="@dimen/pataa_txt_size_20_sp" />
+                            android:textSize="@dimen/pataa_txt_size_20_sp"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:id="@+id/edtHint2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+                            <TextSwitcher
+                                android:id="@+id/simpleTextSwitcher"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="0dp" />
+
+<!--                            <com.pataa.sdk.CustomGifView-->
+<!--                                android:id="@+id/gifview"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_margin="1dp" />-->
+                        </LinearLayout>
 
                         <EditText
                             android:id="@+id/edtPataaEntry"
@@ -73,12 +94,14 @@
                             android:layout_height="match_parent"
                             android:layout_toRightOf="@+id/edtCaret"
                             android:background="@color/color_00000000"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
                             android:fontFamily="@font/mulish_medium"
                             android:gravity="center_vertical"
-                            android:inputType="textPersonName|textCapCharacters"
-                            android:textColor="@color/color_1C1C1C"
-                            android:paddingRight="@dimen/_5sdp_pataa"
                             android:imeOptions="actionSearch"
+                            android:inputType="textPersonName|textCapCharacters"
+                            android:paddingRight="@dimen/_5sdp_pataa"
+                            android:textColor="@color/color_1C1C1C"
                             android:textCursorDrawable="@drawable/cursor_color"
                             android:textSize="@dimen/pataa_txt_size_20_sp" />
 
@@ -310,6 +333,8 @@
                     android:layout_height="@dimen/_15sdp_pataa"
                     android:src="@drawable/ic_what_is_pataa" />
             </LinearLayout>
+
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

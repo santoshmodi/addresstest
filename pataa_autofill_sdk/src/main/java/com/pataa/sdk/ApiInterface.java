@@ -17,5 +17,23 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST(AppConstants.END_POINT_GET_PATAA_DETAIL)
-    Call<GetPataaDetailResponse> getPataaDetail(@Field("api_key") String api_key, @Field("pc") String pc, @Field("app_key") String app_key);
+    Call<GetPataaDetailResponse> getPataaDetail(
+            @Field("api_key") String api_key,
+            @Field("pc") String pc,
+            @Field("device_type") String device_type,
+            @Field("app_name") String app_name,
+            @Field("package_name") String package_name,
+            @Field("package_key") String package_key
+
+    );
+
+
+//    {
+//        "api_key": "lMyd9JlSHtIuePmnnGXjPcTm9mpRa6CarGLLBnBi9D4=",
+//            "pc": "HOME006",
+//            "device_type":"android",  // Required
+//            "app_name":"",                // Required
+//            "package_name":"",  // Required
+//            "package_key":"",  // Required
+//    }
 }

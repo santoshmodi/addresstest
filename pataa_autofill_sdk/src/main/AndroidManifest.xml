@@ -9,6 +9,7 @@
 
     <application android:usesCleartextTraffic="true">
         <activity
+            android:hardwareAccelerated="false"
             android:name="com.pataa.sdk.CreatePataaActivity"
             android:exported="false"
             android:theme="@style/Theme.MySDKApplication" />
