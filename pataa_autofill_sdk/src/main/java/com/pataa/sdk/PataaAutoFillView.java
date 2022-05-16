@@ -122,6 +122,7 @@ public class PataaAutoFillView extends FrameLayout {
                 handler.removeCallbacks(runnable);
                 btnAutoFill.performClick();
                 btnAddAddress.setVisibility(GONE);
+
             }
         }
     }
@@ -310,7 +311,20 @@ public class PataaAutoFillView extends FrameLayout {
             Intent intent = CreatePataaActivity.createPataa(vContainer.getContext(), url, getMeta(getContext(), metaClientKey()), new DialogCallback() {
                 @Override
                 public void Response(String pataa) {
-                    getPataadetail(pataa);
+
+                   activity.runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            getPataadetail(pataa);
+                            // Stuff that updates the UI
+
+                        }
+                    });
+
+
+
                 }
             });
             activity.startActivityForResult(intent, 200);

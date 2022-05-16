@@ -80,12 +80,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="0dp" />
-
-<!--                            <com.pataa.sdk.CustomGifView-->
-<!--                                android:id="@+id/gifview"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_margin="1dp" />-->
                         </LinearLayout>
 
                         <EditText
