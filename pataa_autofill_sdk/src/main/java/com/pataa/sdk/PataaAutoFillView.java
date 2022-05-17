@@ -209,7 +209,7 @@ public class PataaAutoFillView extends FrameLayout {
                     if (edtHint != null) {
                         edtHint.setVisibility(GONE);
                     }
-                    if (edtHint2 != null) {
+                    if (edtHint2 != null && editText.getText().length()==0) {
                         edtHint2.setVisibility(VISIBLE);
                     }
                 }
