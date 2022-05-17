@@ -71,8 +71,6 @@ public class PataaAutoFillView extends FrameLayout {
     private View btnAutoFill;
     private Context context;
     private String apikey = "";
-    private String app_name = "";
-    private String app_package = "";
 
     public PataaAutoFillView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -98,11 +96,9 @@ public class PataaAutoFillView extends FrameLayout {
         return this;
     }
 
-    public PataaAutoFillView setCurrentActivity(Activity activity, String apikey, String app_name, String app_package) {
+    public PataaAutoFillView setCurrentActivity(Activity activity, String apikey) {
         this.activity = activity;
         this.apikey = apikey;
-        this.app_name = app_name;
-        this.app_package = app_package;
         return this;
     }
 
@@ -375,16 +371,14 @@ public class PataaAutoFillView extends FrameLayout {
 
     public void getPataadetail(EditText editText) {
         if (getCurrentActivity() == null) return;
-        if(app_name.isEmpty()) {
-            Resources appR = context.getResources();
-            app_name =  (appR.getText(appR.getIdentifier("app_name",
-                        "string", context.getPackageName()))).toString();
-        }
+        Resources appR = context.getResources();
+        CharSequence txt = appR.getText(appR.getIdentifier("app_name",
+                "string", context.getPackageName()));
 
         Api.getApi(getContext()).getPataaDetail(
                 apikey.length() == 0 ? getMeta(getContext(), metaClientKey()) : apikey,
                 editText.getText().toString().trim().toUpperCase(), "android",
-               app_name,
+                txt.toString(),
                 context.getPackageName(),
                getSha1().toUpperCase()
         ).enqueue(new Callback<GetPataaDetailResponse>() {
