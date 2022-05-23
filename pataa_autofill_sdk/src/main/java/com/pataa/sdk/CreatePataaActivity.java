@@ -34,6 +34,9 @@ import androidx.core.content.ContextCompat;
 public class CreatePataaActivity extends Activity {
     private static String TAG_PARAM_WEB_URL = "TAG_PARAM_WEB_URL";
     private static String TAG_PARAM_API_KEY = "TAG_PARAM_API_KEY";
+    private final int RP_ACCESS_LOCATION = 1001;
+    private final int RP_ACCESS_LOCATION_PERMISSION = 1002;
+
     private WebView webView;
     private static DialogCallback callback;
 //    private ActivityResultLauncher<String> requestPermissionLauncher =
@@ -43,6 +46,8 @@ public class CreatePataaActivity extends Activity {
 ////                }
 //                openCreatePataaFlow();
 //            });
+private String mGeolocationOrigin;
+    private GeolocationPermissions.Callback mGeolocationCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +74,24 @@ public class CreatePataaActivity extends Activity {
         webSettings.setGeolocationEnabled(true);
         webView.setWebChromeClient(new WebChromeClient() {
             public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-                callback.invoke(origin, true, false);
+//                callback.invoke(origin, true, false);
+
+                final String permission = Manifest.permission.ACCESS_FINE_LOCATION;
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
+                        ContextCompat.checkSelfPermission(CreatePataaActivity.this, permission) == PackageManager.PERMISSION_GRANTED) {
+                    // we're on SDK < 23 OR user has already granted permission
+                    callback.invoke(origin, true, false);
+                } else {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(CreatePataaActivity.this, permission)) {
+                        // user has denied this permission before and selected [/] DON'T ASK ME AGAIN
+                        // TODO Best Practice: show an AlertDialog explaining why the user could allow this permission, then ask again
+                    } else {
+                        // ask the user for permissions
+                        ActivityCompat.requestPermissions(CreatePataaActivity.this, new String[] {permission}, RP_ACCESS_LOCATION);
+                        mGeolocationOrigin = origin;
+                        mGeolocationCallback = callback;
+                    }
+                }
             }
         });
 
@@ -104,20 +126,33 @@ public class CreatePataaActivity extends Activity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == 10)
-        {
-            if (grantResults.length == 0 ||
-                    grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Log.i("TAG", "User denied ACCESS_COARSE_LOCATION permission.");
-                Toast.makeText(this,"User denied permission.", Toast.LENGTH_SHORT).show();
-            } else {
-              //  Toast.makeText(this, R.string.permission_granted, Toast.LENGTH_SHORT).show();
-                Log.i("TAG", "User granted ACCESS_COARSE_LOCATION permission.");
-                openCreatePataaFlow();
-            }
+        switch (requestCode) {
+            case RP_ACCESS_LOCATION: {
+                boolean allow = false;
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // user has allowed these permissions
+                    allow = true;
+                }
+                if (mGeolocationCallback != null) {
+                    mGeolocationCallback.invoke(mGeolocationOrigin, allow, false);
+                }
 
-            ;
+                break;
+            }
+            case RP_ACCESS_LOCATION_PERMISSION: {
+                if (grantResults.length == 0 ||
+                        grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("TAG", "User denied ACCESS_COARSE_LOCATION permission.");
+                    Toast.makeText(this,"User denied permission.", Toast.LENGTH_SHORT).show();
+                } else {
+                    //  Toast.makeText(this, R.string.permission_granted, Toast.LENGTH_SHORT).show();
+                    Log.i("TAG", "User granted ACCESS_COARSE_LOCATION permission.");
+                    openCreatePataaFlow();
+                }
+                break;
+            }
         }
+
     }
 
     private void checkPermission() {
@@ -125,8 +160,7 @@ public class CreatePataaActivity extends Activity {
             openCreatePataaFlow();
         } else {
 //            requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION);
-            ActivityCompat.requestPermissions(this , new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
-                    10);
+            ActivityCompat.requestPermissions(this , new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, RP_ACCESS_LOCATION_PERMISSION);
         }
     }
 
