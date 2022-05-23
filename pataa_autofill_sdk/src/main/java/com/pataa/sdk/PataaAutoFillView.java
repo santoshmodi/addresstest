@@ -68,6 +68,7 @@ public class PataaAutoFillView extends FrameLayout {
     private TextView tvShipTo;
     private AlertDialog whatIsPataaDialog;
     private EditText editText;
+    private View edtHint2,edtHint;
     private View btnAutoFill;
     private Context context;
     private String apikey = "";
@@ -118,6 +119,8 @@ public class PataaAutoFillView extends FrameLayout {
     public void getPataadetail(String pataaCode) {
         if (Utill.isNotNullOrEmpty(pataaCode) && Validation.isPataaCodeValid(pataaCode)) {
             if (editText != null && editText != null) {
+                edtHint2.setVisibility(GONE);
+                edtHint.setVisibility(GONE);
                 editText.setText(pataaCode);
                 handler.removeCallbacks(runnable);
                 btnAutoFill.performClick();
@@ -163,8 +166,8 @@ public class PataaAutoFillView extends FrameLayout {
         editText = inflatedView.findViewById(R.id.edtPataaEntry);
         View edtCaret = inflatedView.findViewById(R.id.edtCaret);
         View tvClickHere = inflatedView.findViewById(R.id.tvClickHere);
-        View edtHint = inflatedView.findViewById(R.id.edtHint);
-        View edtHint2 = inflatedView.findViewById(R.id.edtHint2);
+        edtHint = inflatedView.findViewById(R.id.edtHint);
+        edtHint2 = inflatedView.findViewById(R.id.edtHint2);
         View tvCreateNow = inflatedView.findViewById(R.id.tvCreateNow);
         btnAddAddress = inflatedView.findViewById(R.id.btnAddAddress);
         btnCrossPataaNotFound = inflatedView.findViewById(R.id.btnCrossPataaNotFound);
@@ -267,6 +270,7 @@ public class PataaAutoFillView extends FrameLayout {
                 // TODO Auto-generated method stub
                 // create a TextView
                 TextView t = new TextView(context);
+                t.setTextColor(getResources().getColor(android.R.color.darker_gray));
                 // set the gravity of text to top and center horizontal
 //                t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
                 // set displayed text size
