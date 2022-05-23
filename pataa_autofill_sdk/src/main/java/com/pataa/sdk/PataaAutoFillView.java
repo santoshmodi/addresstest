@@ -232,8 +232,8 @@ public class PataaAutoFillView extends FrameLayout {
                         edtHint2.setVisibility(charSequence.length() > 0 ? GONE : VISIBLE);
                     }
 
-                    handler.removeCallbacks(runnable);
-                    handler.postDelayed(runnable, REFRESS_INTERVAL_FOR_VALIDATION_CHECK);
+//                    handler.removeCallbacks(runnable);
+//                    handler.postDelayed(runnable, REFRESS_INTERVAL_FOR_VALIDATION_CHECK);
                     edtCaret.setVisibility(charSequence.length() > 0 ? VISIBLE : GONE);
                 } catch (Exception e) {
                     Logger.e(e.getMessage());
