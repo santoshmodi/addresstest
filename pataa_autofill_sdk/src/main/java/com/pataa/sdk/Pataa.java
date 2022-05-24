@@ -114,7 +114,7 @@ public class Pataa {
             if (Utill.isNotNullOrEmpty(getZipcode())) {
                 if (Utill.isNotNullOrEmpty(getAddress1()) || Utill.isNotNullOrEmpty(getAddress2()) || Utill.isNotNullOrEmpty(getAddress3())
                         || Utill.isNotNullOrEmpty(getAddress4()) || Utill.isNotNullOrEmpty(getCity_name())) {
-                    builder.append(" - " + getZipcode().trim());
+                    builder.append(" " + getZipcode().trim());
                 } else {
                     builder.append(getZipcode().trim());
                 }

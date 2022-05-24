@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.text.Editable;
@@ -232,8 +233,8 @@ public class PataaAutoFillView extends FrameLayout {
                         edtHint2.setVisibility(charSequence.length() > 0 ? GONE : VISIBLE);
                     }
 
-//                    handler.removeCallbacks(runnable);
-//                    handler.postDelayed(runnable, REFRESS_INTERVAL_FOR_VALIDATION_CHECK);
+                    handler.removeCallbacks(runnable);
+                    handler.postDelayed(runnable, REFRESS_INTERVAL_FOR_VALIDATION_CHECK);
                     edtCaret.setVisibility(charSequence.length() > 0 ? VISIBLE : GONE);
                 } catch (Exception e) {
                     Logger.e(e.getMessage());
@@ -270,7 +271,7 @@ public class PataaAutoFillView extends FrameLayout {
                 // TODO Auto-generated method stub
                 // create a TextView
                 TextView t = new TextView(context);
-                t.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                t.setTextColor(Color.parseColor("#989898"));
                 // set the gravity of text to top and center horizontal
 //                t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
                 // set displayed text size

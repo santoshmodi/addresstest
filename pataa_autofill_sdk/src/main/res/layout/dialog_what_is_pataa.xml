@@ -470,15 +470,15 @@
 
 
                     <LinearLayout
-                        android:gravity="center_vertical"
                         android:id="@+id/llPataaBenefit"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-
                         android:layout_below="@+id/llSharing"
+
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/_15sdp_pataa"
                         android:background="@color/color_FFCC4B"
+                        android:gravity="center_vertical"
                         android:orientation="vertical"
                         android:paddingLeft="@dimen/_15sdp_pataa"
                         android:paddingTop="@dimen/_15sdp_pataa"
@@ -526,9 +526,9 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_marginTop="@dimen/_1sdp_pataa"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_1sdp_pataa"
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -555,9 +555,9 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_marginTop="@dimen/_1sdp_pataa"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_1sdp_pataa"
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -584,9 +584,9 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_marginTop="@dimen/_1sdp_pataa"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_1sdp_pataa"
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatTextView
