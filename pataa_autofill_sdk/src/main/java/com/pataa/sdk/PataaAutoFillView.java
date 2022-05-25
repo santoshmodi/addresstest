@@ -443,7 +443,7 @@ public class PataaAutoFillView extends FrameLayout {
                 vValidPataa.setVisibility(VISIBLE);
             }
             address.onPataaFound(pataaDetail.getResult().getUser(), pataaDetail.getResult().getPataa());
-            refreshViewChildrenLayout(this);
+            refreshViewChildrenLayout();
         } catch (Exception e) {
             Logger.e(e.getMessage());
             e.printStackTrace();
@@ -464,7 +464,7 @@ public class PataaAutoFillView extends FrameLayout {
             btnAddAddress.setVisibility(GONE);
 
             address.onPataaNotFound(pataaDetail.getMsg());
-            refreshViewChildrenLayout(this);
+            refreshViewChildrenLayout();
         } catch (Exception e) {
             Logger.e(e.getMessage());
             e.printStackTrace();
@@ -484,19 +484,14 @@ public class PataaAutoFillView extends FrameLayout {
             btnGreenTickPataaFound.setVisibility(GONE);
             btnAddAddress.setVisibility(VISIBLE);
             if (clearTheField) editText.setText("");
-            refreshViewChildrenLayout(this);
+            refreshViewChildrenLayout();
         } catch (Exception e) {
             Logger.e(e.getMessage());
             e.printStackTrace();
         }
     }
 
-    private void refreshViewChildrenLayout(View view){
-        view.measure(
-                View.MeasureSpec.makeMeasureSpec(view.getMeasuredWidth(), View.MeasureSpec.EXACTLY),
-                View.MeasureSpec.makeMeasureSpec(view.getMeasuredHeight(), View.MeasureSpec.EXACTLY));
-        view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
-    }
+
     private void refreshViewChildrenLayout(){
         View view = this;
         view.measure(
