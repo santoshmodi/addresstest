@@ -128,6 +128,7 @@ public class PataaAutoFillView extends FrameLayout {
                 btnAddAddress.setVisibility(GONE);
 
             }
+            refreshViewChildrenLayout();
         }
     }
 
@@ -150,6 +151,7 @@ public class PataaAutoFillView extends FrameLayout {
                     Logger.e("is not a valid pataa : " + s);
                     setToInitialViewState(false);
                 }
+                refreshViewChildrenLayout();
             } catch (Exception e) {
                 Logger.e(e.getMessage());
                 e.printStackTrace();
